@@ -1,8 +1,9 @@
+import 'dart:ui';
+
 import 'package:carrental/constants.dart';
 import 'package:carrental/screens/components/custom_painter.dart';
 import 'package:carrental/screens/pages/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'dart:ui';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -13,28 +14,15 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final PageController _pageController = PageController();
-
   late List<Widget> _screens;
 
   @override
   void initState() {
     super.initState();
-    _screens = [
-      const OnBoarding(
-          current: 0,
-          image: "car_1.png",
-          text: "Simply choose and book",
-          isLastPage: false),
-      const OnBoarding(
-          current: 1,
-          image: "car_2.png",
-          text: "AT Affordable price",
-          isLastPage: false),
-      const OnBoarding(
-          current: 2,
-          image: "car_4.png",
-          text: "Grab up your engine",
-          isLastPage: true),
+    _screens = const [
+      OnBoarding(image: "car_1.png", text: "Simply the best", current: 0, isLastPage: false),
+      OnBoarding(image: "car_2.png", text: "Affordable car for rental", current: 1, isLastPage: false),
+      OnBoarding(image: "car_4.png", text: "Affordable car for rental", current: 2, isLastPage: true),
     ];
   }
 
@@ -81,9 +69,10 @@ class OnBoarding extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+
     return SizedBox(
-      width: width,
       height: height,
+      width: width,
       child: Stack(
         children: [
           Positioned(
