@@ -1,3 +1,4 @@
+import 'package:carrental/constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomOutline extends StatelessWidget {
@@ -80,4 +81,81 @@ class _GradientPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => oldDelegate != this;
+}
+
+class CustomGradient extends StatelessWidget {
+  const CustomGradient({Key? key, required this.width, required this.height, this.child}) : super(key: key);
+
+  final double width;
+  final double height;
+  final Widget? child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 12.0),
+      child: CustomOutline(
+        strokeWidth: 2,
+        radius: 20,
+        padding: const EdgeInsets.all(4),
+        width: width,
+        height: width,
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Constants.kRedColor.withOpacity(0.1),
+            Constants.kRedColor.withOpacity(0),
+            Constants.kBlueColor.withOpacity(0.1),
+            Constants.kBlueColor.withOpacity(0.1)
+          ],
+          stops: const [0.2, 0.4, 0.6, 1],
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(20),
+            ),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Constants.kRedColor.withOpacity(0.1),
+                Constants.kRedColor.withOpacity(0.01),
+                Constants.kBlueColor.withOpacity(0.01),
+                Constants.kBlueColor.withOpacity(0.1),
+                Constants.kBlueColor
+              ],
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: child,
+          ),
+        ),
+      ),
+    );
+  }
+}
+class GradientText extends StatelessWidget {
+  const GradientText(
+    this.text, {
+    required this.gradient,
+    this.style,
+  });
+
+  final String text;
+  final TextStyle? style;
+  final Gradient gradient;
+
+  @override
+  Widget build(BuildContext context) {
+    return ShaderMask(
+      blendMode: BlendMode.srcIn,
+      shaderCallback: (bounds) => gradient.createShader(
+        Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+      ),
+      child: Text(text, style: style),
+    );
+  }
 }

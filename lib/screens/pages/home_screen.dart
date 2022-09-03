@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:carrental/constants.dart';
 import 'package:carrental/fakedata.dart';
 import 'package:carrental/screens/components/custom_painter.dart';
+import 'package:carrental/screens/pages/detailscreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -153,104 +154,107 @@ class HomeScreen extends StatelessWidget {
                           popularcars.length,
                           (index) {
                             PopularCars car = popularcars[index];
-                            return Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: CustomOutline(
-                                strokeWidth: 2,
-                                radius: 20,
-                                padding: const EdgeInsets.all(4),
-                                width: width * 0.4,
-                                height: width * 0.7,
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    Constants.kRedColor.withOpacity(0.01),
-                                    Constants.kRedColor.withOpacity(0),
-                                    Constants.kBlueColor.withOpacity(0.1),
-                                    Constants.kBlueColor
-                                  ],
-                                  stops: const [0.2, 0.4, 0.6, 1],
-                                ),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      alignment: Alignment.bottomLeft,
-                                      image:
-                                          AssetImage('assets/img/${car.image}'),
-                                    ),
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(20),
-                                    ),
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        Constants.kRedColor.withOpacity(0.1),
-                                        Constants.kRedColor.withOpacity(0.01),
-                                        Constants.kBlueColor.withOpacity(0.1),
-                                        Constants.kBlueColor
-                                      ],
-                                    ),
+                            return InkWell(
+                              onTap: () =>  Navigator.push(context, MaterialPageRoute(builder: (context)=> CarDetailScreen(car:car))),
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: CustomOutline(
+                                  strokeWidth: 2,
+                                  radius: 20,
+                                  padding: const EdgeInsets.all(4),
+                                  width: width * 0.4,
+                                  height: width * 0.7,
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Constants.kRedColor.withOpacity(0.01),
+                                      Constants.kRedColor.withOpacity(0),
+                                      Constants.kBlueColor.withOpacity(0.1),
+                                      Constants.kBlueColor
+                                    ],
+                                    stops: const [0.2, 0.4, 0.6, 1],
                                   ),
-                                  child: Stack(
-                                    children: [
-                                      Positioned(
-                                        bottom: 50,
-                                        left: 10,
-                                        child: Text(
-                                          car.transmission.toUpperCase(),
-                                          style: const TextStyle(
-                                            color: Constants.kGreyColor,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        alignment: Alignment.bottomLeft,
+                                        image:
+                                            AssetImage('assets/img/${car.image}'),
                                       ),
-                                      Positioned(
-                                        bottom: 30,
-                                        left: 10,
-                                        child: Text(
-                                          car.name,
-                                          style: const TextStyle(
-                                            color: Constants.kWhiteColor,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(20),
                                       ),
-                                      Positioned(
-                                        bottom: 5,
-                                        left: 10,
-                                        child: Text(
-                                          car.price,
-                                          style: const TextStyle(
-                                            color: Constants.kGreyColor,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          Constants.kRedColor.withOpacity(0.1),
+                                          Constants.kRedColor.withOpacity(0.01),
+                                          Constants.kBlueColor.withOpacity(0.1),
+                                          Constants.kBlueColor
+                                        ],
                                       ),
-                                      Positioned(
-                                        bottom: 0,
-                                        right: 0,
-                                        child: Container(
-                                          padding: const EdgeInsets.all(8),
-                                          decoration: const BoxDecoration(
-                                            color: Constants.kRedColor,
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(20),
-                                              bottomRight: Radius.circular(20),
+                                    ),
+                                    child: Stack(
+                                      children: [
+                                        Positioned(
+                                          bottom: 50,
+                                          left: 10,
+                                          child: Text(
+                                            car.transmission.toUpperCase(),
+                                            style: const TextStyle(
+                                              color: Constants.kGreyColor,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w700,
                                             ),
                                           ),
-                                          child: const Icon(
-                                            CupertinoIcons
-                                                .arrowshape_turn_up_right_fill,
-                                            color: Constants.kWhiteColor,
+                                        ),
+                                        Positioned(
+                                          bottom: 30,
+                                          left: 10,
+                                          child: Text(
+                                            car.name,
+                                            style: const TextStyle(
+                                              color: Constants.kWhiteColor,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w700,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                        Positioned(
+                                          bottom: 5,
+                                          left: 10,
+                                          child: Text(
+                                            car.price,
+                                            style: const TextStyle(
+                                              color: Constants.kGreyColor,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          bottom: 0,
+                                          right: 0,
+                                          child: Container(
+                                            padding: const EdgeInsets.all(8),
+                                            decoration: const BoxDecoration(
+                                              color: Constants.kRedColor,
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(20),
+                                                bottomRight: Radius.circular(20),
+                                              ),
+                                            ),
+                                            child: const Icon(
+                                              CupertinoIcons
+                                                  .arrowshape_turn_up_right_fill,
+                                              color: Constants.kWhiteColor,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -504,6 +508,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-///
-///thank you for watching, please sun scribe to the channel, 
-///source code link in the video desc...
