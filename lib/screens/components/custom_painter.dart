@@ -1,3 +1,5 @@
+// ignore_for_file: sort_child_properties_last, use_key_in_widget_constructors
+
 import 'package:carrental/constants.dart';
 import 'package:flutter/material.dart';
 
