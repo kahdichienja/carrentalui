@@ -20,7 +20,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    // final ads = Provider.of<AdsProvider>(context, listen: false);
     super.initState();
+
     _screens = [
       const OnBoarding(
         image: "car_1.png",
@@ -41,6 +43,15 @@ class _SplashScreenState extends State<SplashScreen> {
         isLastPage: true,
       ),
     ];
+
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   Future.delayed(const Duration(seconds: 30), () {
+    //     if (ads.interstitialAd != null) {
+    //       ads.interstitialAd?.show();
+    //       ads.newAdsinit(context);
+    //     }
+    //   });
+    // });
   }
 
   void _setPage(int pageIndex) {
@@ -95,8 +106,8 @@ class OnBoarding extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
-    return Consumer<AdsProvider>(
-      builder: (context, ads, child) => SizedBox(
+    return Consumer<AdsProvider>(builder: (context, ads, child) {
+      return SizedBox(
         height: height,
         width: width,
         child: Stack(
@@ -224,12 +235,14 @@ class OnBoarding extends StatelessWidget {
                       ),
                       child: InkWell(
                         onTap: () {
-                          if (ads.interstitialAd != null) {
-                            ads.interstitialAd?.show();
-                          } else {ads.moveToHome(context);}
-                          Future.delayed(const Duration(seconds: 5), () {
-                            ads.moveToHome(context);
-                          });
+                          // if (ads.interstitialAd != null) {
+                          //   ads.interstitialAd?.show();
+                          // } else {
+                          //   ads.moveToHome(context);
+                          // }
+                          // Future.delayed(const Duration(seconds: 5), () {
+                          ads.moveToHome(context);
+                          // });
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -285,7 +298,8 @@ class OnBoarding extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
+      );
+      ;
+    });
   }
 }

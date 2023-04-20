@@ -127,22 +127,22 @@ class CarDetailScreen extends StatelessWidget {
               SafeArea(
                 child: ListView(
                   children: [
-                    // ads.bannerAd != null
-                    //     ? SizedBox(
-                    //         width: ads.bannerAd!.size.width.toDouble(),
-                    //         height: ads.bannerAd!.size.height.toDouble(),
-                    //         child: Align(
-                    //           alignment: Alignment.topCenter,
-                    //           child: AdWidget(
-                    //             key: Key(ads.randString()),
-                    //             ad: ads.bannerAd!,
-                    //           ),
-                    //         ),
-                    //       )
-                    //     : const Text(
-                    //         "....",
-                    //         style: TextStyle(color: Colors.white),
-                    //       ),
+                    ads.bannerAd != null
+                        ? SizedBox(
+                            width: ads.bannerAd!.size.width.toDouble(),
+                            height: ads.bannerAd!.size.height.toDouble(),
+                            child: Align(
+                              alignment: Alignment.topCenter,
+                              child: AdWidget(
+                                key: Key(ads.randString()),
+                                ad: ads.bannerAd!,
+                              ),
+                            ),
+                          )
+                        : const Text(
+                            ".",
+                            style: TextStyle(color: Colors.white),
+                          ),
                     Padding(
                       padding: const EdgeInsets.all(18.0),
                       child: Row(

@@ -7,6 +7,7 @@ import 'package:carrental/screens/components/custom_painter.dart';
 import 'package:carrental/screens/pages/detailscreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -100,34 +101,86 @@ class HomeScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Spacer(),
-                        Text(
-                          "Select Car".toUpperCase(),
-                          style: const TextStyle(
-                            color: Constants.kGreyColor,
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        const Spacer(),
-                        Container(
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Constants.kBlueColor,
-                                  blurRadius: 20,
-                                  blurStyle: BlurStyle.outer)
-                            ],
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Icon(
-                              Icons.person,
-                              color: Constants.kGreyColor,
-                              size: 15,
+                        Consumer<AdsProvider>(
+                          builder: (context, ads, child) => InkWell(
+                            onTap: () async {
+                              if (ads.rewardedAd != null) {
+                                print(1221);
+                                ads.rewardedAd?.show(
+                                  onUserEarnedReward: (_, reward) {
+                                    print(reward.amount);
+                                    print(reward.type);
+                                  },
+                                );
+                                await ads.newAdsinit(context);
+                              } 
+                            },
+                            child: Text(
+                              "Select Car".toUpperCase(),
+                              style: const TextStyle(
+                                color: Constants.kGreyColor,
+                                fontSize: 24,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
                         ),
+                        const Spacer(),
+                        Consumer<AdsProvider>(
+                          builder: (context, ads, child) => InkWell(
+                            onTap: () async {
+                              if (ads.rewardedAd != null) {
+                                print(1221);
+                                ads.rewardedAd?.show(
+                                  onUserEarnedReward: (_, reward) {
+                                    print(reward.amount);
+                                    print(reward.type);
+                                  },
+                                );
+                                await ads.newAdsinit(context);
+                              }
+                            },
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Constants.kBlueColor,
+                                      blurRadius: 20,
+                                      blurStyle: BlurStyle.outer)
+                                ],
+                              ),
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.person,
+                                  color: Constants.kGreyColor,
+                                  size: 15,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Consumer<AdsProvider>(builder: (context, ads, child)=> Row(
+                      children: [
+                        ads.bannerAd != null
+                          ? Align(
+                            alignment: Alignment.topCenter,
+                            child: SizedBox(
+                              width: ads.bannerAd!.size.width.toDouble(),
+                              height: ads.bannerAd!.size.height.toDouble(),
+                              child: AdWidget(
+                                  ad: ads.bannerAd!,
+                                ),
+                            ),
+                          )
+                          : const Text(
+                              "..",
+                              style: TextStyle(color: Colors.white),
+                            ),
                       ],
                     ),
                   ),
@@ -160,14 +213,12 @@ class HomeScreen extends StatelessWidget {
                               builder: (context, ads, child) => InkWell(
                                 onTap: () async {
                                   await ads.newAdsinit(context);
-                                  if (ads.interstitialAd != null) {
-                                    ads.interstitialAd?.show();
-                                  } else {
-                                    ads.moveToHome(context);
-                                  }
+                                  // if (ads.interstitialAd != null) {
+                                  //   ads.interstitialAd?.show();
+                                  // } else {
+                                  //   ads.moveToHome(context);
+                                  // }
 
-                                  Future.delayed(const Duration(seconds: 5),
-                                      () {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -176,7 +227,6 @@ class HomeScreen extends StatelessWidget {
                                         ),
                                       ),
                                     );
-                                  });
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.only(right: 8.0),
@@ -438,6 +488,19 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ],
                       ),
+                    ),
+                  ),
+                  Consumer<AdsProvider>(builder: (context, ads, child) => Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: ads.bannerAd2 != null
+                        ?  SizedBox(
+                            width: ads.bannerAd2!.size.width.toDouble(),
+                            height: ads.bannerAd2!.size.height.toDouble(),
+                            child: AdWidget(
+                                ad: ads.bannerAd2!,
+                              ),
+                          )
+                        : const SizedBox.shrink(),
                     ),
                   ),
                   Padding(
